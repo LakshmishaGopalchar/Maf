@@ -1,6 +1,7 @@
-import spacy
+
 from flask import Flask
 from flask import Flask, jsonify
+import spacy
 
 
 #%matplotlib inline
