@@ -1,6 +1,3 @@
-
-from flask import Flask
-
 import spacy
 from flask import Flask
 from flask import Flask, jsonify
