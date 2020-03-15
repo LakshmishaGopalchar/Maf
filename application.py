@@ -4,13 +4,13 @@ from flask import Flask, jsonify
 
 
 #%matplotlib inline
-import matplotlib.pyplot as plt
-plt.rcParams['font.size'] = 14
+#import matplotlib.pyplot as plt
+#plt.rcParams['font.size'] = 14
 from spacy.lang.en import English
 
 
 nlp = English()
-import PyPDF2
+#import PyPDF2
 import os
 from os import listdir
 from os.path import isfile, join
