@@ -76,6 +76,11 @@ def create_profile(text,tc):
   #  dataf['Candidate Name'].fillna(dataf['Candidate Name'].iloc[0], inplace = True)
     return(df3)
 
+def create_profileResr(text):
+    #text = pdfextract(file) 
+    text = str(text)
+    return((text))
+
 
 app = Flask(__name__)
 
@@ -84,6 +89,14 @@ app.debug = True
 @app.route("/")
 def hello():
     return "Hello World!"
+
+
+@app.route('/jsonResr', methods=['POST']) 
+def textFormatOld():
+    req_data = request.get_json()
+    language = req_data['textDat']
+    v=str(language)
+    return (v)
 
 @app.route('/json', methods=['POST']) 
 def textFormat():
