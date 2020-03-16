@@ -2,7 +2,7 @@
 from flask import Flask
 from flask import Flask, jsonify
 import spacy
-
+from flask import request
 
 #%matplotlib inline
 #import matplotlib.pyplot as plt
