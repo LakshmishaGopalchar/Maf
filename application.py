@@ -28,11 +28,13 @@ def create_profile(text,tc):
     text = text.replace("\\n", "")
     text = text.lower()
     #below is the csv where we have all the keywords, you can customize your own
-    T=tc
-    T=T.lower()
-    dfObj = pd.DataFrame()
-    dfObj = dfObj.append({'tText': T}, ignore_index=True)
-    NLR_words = [nlp(text) for text in dfObj['tText'].dropna(axis = 0)]
+  #  T=tc
+  #  T=T.lower()
+   # dfObj = pd.DataFrame()
+  #  dfObj = dfObj.append({'tText': T}, ignore_index=True)
+  #  NLR_words = [nlp(text) for text in dfObj['tText'].dropna(axis = 0)]
+    x = [element.lower() for element in tc]
+    NLR_words = [nlp(text) for text in x]
     
 
 
