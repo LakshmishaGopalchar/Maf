@@ -117,13 +117,7 @@ def textFormatOld():
 @app.route('/json', methods=['POST']) 
 def textFormat():
     req_data = request.get_json()
-    
     language = req_data['textDat']
-
-    # text = request.args.get('text')
-    #print(language)
-   # key = request.args.get('key')
-    #print(framework)
     r=create_profile(language)
     r=r.loc[r['Count'] > '1']
     return (r.to_json(orient='records'))
