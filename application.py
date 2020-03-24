@@ -19,32 +19,46 @@ from io import StringIO
 import pandas as pd
 from collections import Counter
 from spacy.matcher import PhraseMatcher
+import requests
+import codecs
+import urllib.request, json 
+from pandas.io.json import json_normalize
 
 
 #function that does phrase matching and builds a candidate profile
-def create_profile(text,tc):
+def create_profile(textDat):
     #text = pdfextract(file) 
-    text = str(text)
-    text = text.replace("\\n", "")
-    text = text.lower()
+    textDat = str(textDat)
+    textDat = textDat.replace("\\n", "")
+    textDat = textDat.lower()
     #below is the csv where we have all the keywords, you can customize your own
   #  T=tc
   #  T=T.lower()
    # dfObj = pd.DataFrame()
   #  dfObj = dfObj.append({'tText': T}, ignore_index=True)
   #  NLR_words = [nlp(text) for text in dfObj['tText'].dropna(axis = 0)]
-    x = [element.lower() for element in tc]
-    NLR_words = [nlp(text) for text in x]
+    #x = [element.lower() for element in tc]
+    #NLR_words = [nlp(text) for text in x]
     
+    r = requests.get('https://maftalentsearchstorage.blob.core.windows.net/mafresumerepo/skillsets/Skills.json?st=2020-03-15T12%3A29%3A28Z&se=2020-03-31T12%3A29%3A00Z&sp=rl&sv=2018-03-28&sr=b&sig=rUKnQsR82ALuRQUMZmlrpHYVdej5ApyAag4M6gUE%2BUU%3D')
+    #print (r.json())
 
+    #decoded_data=codecs.decode(r.text.encode(), 'utf-8-sig')
+    #data = json.loads(decoded_data.lower())
+    
+    decoded_data=codecs.decode(r.text.encode(), 'utf-8-sig')
+    data = json.loads(decoded_data.lower())
+
+    df=json_normalize(data)
+    words = [nlp(text) for text in df['name'].dropna(axis = 0)]
 
     matcher = PhraseMatcher(nlp.vocab)
-    matcher.add('Data', None, *NLR_words)
+    matcher.add('Data', None, *words)
     
     
     
 
-    doc = nlp(text)
+    doc = nlp(textDat)
 
     d = []  
     matches = matcher(doc)
@@ -105,14 +119,15 @@ def textFormat():
     req_data = request.get_json()
     
     language = req_data['textDat']
-    framework = req_data['keyData']
+    #framework = req_data['keyData']
     
    # text = request.args.get('text')
     #print(language)
    # key = request.args.get('key')
     #print(framework)
-    r=create_profile(language,framework)
-    return (r.to_json(orient='index'))
+    r=create_profile(language)
+    r=r.loc[r['Count'] > '1']
+    return (r.to_json(orient='records'))
 
 
 
