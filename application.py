@@ -119,9 +119,8 @@ def textFormat():
     req_data = request.get_json()
     
     language = req_data['textDat']
-    #framework = req_data['keyData']
-    
-   # text = request.args.get('text')
+
+    # text = request.args.get('text')
     #print(language)
    # key = request.args.get('key')
     #print(framework)
